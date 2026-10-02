@@ -1,0 +1,443 @@
+schema_version: 1
+registry_note: "URL để null cho tới khi được xác minh đúng page; dùng lookup_query để tìm nguồn. Không được bỏ source có enabled=true."
+sources:
+  - {
+      id: 1,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn Khoa - Liên Chi Hội Khoa Toán - Tin học HCMUS",
+      lookup_query: "Đoàn Khoa Liên Chi Hội Khoa Toán Tin học HCMUS",
+      url: "https://www.facebook.com/DK.LCH.ToanTinHoc.HCMUS",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 2,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn khoa - Liên chi Hội CNTT KHTN",
+      lookup_query: "Đoàn khoa Liên chi Hội CNTT KHTN",
+      url: "https://www.facebook.com/DoanKhoaLienChiHoi.CNTT.KHTN",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 3,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn - Hội Khoa Điện tử - Viễn thông",
+      lookup_query: "Đoàn Hội Khoa Điện tử Viễn thông HCMUS",
+      url: "https://www.facebook.com/DoanHoiKhoaDientuVienthongHCMUS",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 4,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn Khoa - Liên Chi Hội Khoa Khoa học và Công nghệ Vật liệu",
+      lookup_query: "Đoàn Khoa Liên Chi Hội Khoa Khoa học và Công nghệ Vật liệu HCMUS",
+      url: "https://www.facebook.com/khcnvl.khtn",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 5,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn khoa - Liên chi Hội Khoa Môi trường",
+      lookup_query: "Đoàn khoa Liên chi Hội Khoa Môi trường HCMUS",
+      url: "https://www.facebook.com/doanhoikhoamoitruong",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 6,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn khoa - Liên Chi Hội khoa Hóa học ĐH.KHTN",
+      lookup_query: "Đoàn khoa Liên Chi Hội khoa Hóa học ĐH KHTN",
+      url: "https://www.facebook.com/doankhoa.lienchihoi.hoahoc.khtn",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 7,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn Khoa & Liên Chi Hội Khoa Sinh học - Công nghệ Sinh học ĐH KHTN",
+      lookup_query: "Đoàn Khoa Liên Chi Hội Khoa Sinh học Công nghệ Sinh học ĐH KHTN",
+      url: "https://www.facebook.com/DoanKhoa.LienChiHoi.KhoaSinhHoc.DHKHTN",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 8,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn khoa × Liên chi Hội Khoa Vật lý - Vật lý Kỹ thuật",
+      lookup_query: "Đoàn khoa Liên chi Hội Khoa Vật lý Vật lý Kỹ thuật HCMUS",
+      url: "https://www.facebook.com/doanhoikhoavatly",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 9,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn khoa - Liên chi Hội Khoa Địa chất",
+      lookup_query: "Đoàn khoa Liên chi Hội Khoa Địa chất HCMUS",
+      url: "https://www.facebook.com/dk.lch.diachatkhtn",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 10,
+      category: faculty,
+      priority: 1,
+      name: "Đoàn Hội Công nghệ bán dẫn - Khoa học tự nhiên - K25",
+      lookup_query: "Đoàn Hội Công nghệ bán dẫn Khoa học tự nhiên K25",
+      url: "https://www.facebook.com/doanhoi25cbd1hcmus",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 11,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25C09 HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25C09 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61584059313239",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 12,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25C07 HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25C07 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61585770213520",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 13,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25ICD1 - HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25ICD1 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61583028617191",
+      access: unknown,
+      enabled: true,
+    }
+  - {
+      id: 14,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25CKH1 - HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25CKH1 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61581861035394",
+      access: unknown,
+      enabled: true,
+    }
+  - {
+      id: 15,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25CMT HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25CMT HCMUS",
+      url: "https://www.facebook.com/HCMUSchidoanchihoi25cmt",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 16,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25 CTT2 HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25 CTT2 HCMUS",
+      url: "https://www.facebook.com/25ctt2",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 17,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25 CTT3",
+      lookup_query: "Chi Đoàn Chi Hội 25 CTT3 HCMUS",
+      url: "https://www.facebook.com/chidoanchihoi25ctt3",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 18,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25HOH1-Cộng Đồng Sống Chết Vì ĐRL HCMUS K25",
+      lookup_query: "Chi Đoàn Chi Hội 25HOH1 Cộng Đồng Sống Chết Vì ĐRL HCMUS K25",
+      url: "https://www.facebook.com/profile.php?id=61581806486294",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 19,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn & Chi Hội 24csh1",
+      lookup_query: "Chi Đoàn Chi Hội 24csh1 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61568348784041",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 20,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn - Chi Hội 24TNT1 HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 24TNT1 HCMUS",
+      url: "https://www.facebook.com/chidoanchihoi24tnt1",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 21,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn - Chi Hội 24KVL",
+      lookup_query: "Chi Đoàn Chi Hội 24KVL HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61571158260707",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 22,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn - Chi Hội 24 KDL1 HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 24 KDL1 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61568578964319",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 23,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn - Chi Hội DTV1 K24 - HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội DTV1 K24 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61569948778765",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 24,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn - Chi Hội DTV2 K24 - HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội DTV2 K24 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61568148683610",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 25,
+      category: cohort24,
+      priority: 4,
+      name: "Chi Đoàn - Chi Hội ICD1 K24 - HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội ICD1 K24 HCMUS",
+      url: "https://www.facebook.com/24icd1",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 26,
+      category: cohort23,
+      priority: 5,
+      name: "Chi Đoàn - Chi Hội 23 HOH2",
+      lookup_query: "Chi Đoàn Chi Hội 23 HOH2 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61553725456820",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 27,
+      category: cohort23,
+      priority: 5,
+      name: "Chi Đoàn - Chi Hội 23 CKH3",
+      lookup_query: "Chi Đoàn Chi Hội 23 CKH3 HCMUS",
+      url: "https://www.facebook.com/23CKH3",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 28,
+      category: cohort23,
+      priority: 5,
+      name: "Chi Đoàn - Chi Hội 23DTV CLC3",
+      lookup_query: "Chi Đoàn Chi Hội 23DTV CLC3 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61553574039391",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 29,
+      category: cohort23,
+      priority: 5,
+      name: "HCMUS Chi Đoàn - Chi Hội 23CLC09",
+      lookup_query: "HCMUS Chi Đoàn Chi Hội 23CLC09",
+      url: "https://www.facebook.com/hcmus23clc09",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 30,
+      category: cohort23,
+      priority: 5,
+      name: "Chi Đoàn DTV1 - K23 HCMUS",
+      lookup_query: "Chi Đoàn DTV1 K23 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61553639191189",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 31,
+      category: cohort23,
+      priority: 5,
+      name: "Chi Hội TTH2 - K23 HCMUS",
+      lookup_query: "Chi Hội TTH2 K23 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61552472039707",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 32,
+      category: organization,
+      priority: 2,
+      name: "Ban Tình nguyện, Hội Sinh viên trường Đại học Khoa học Tự nhiên",
+      lookup_query: "Ban Tình nguyện Hội Sinh viên trường Đại học Khoa học Tự nhiên",
+      url: "https://www.facebook.com/bantinhnguyenkhtn",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 33,
+      category: organization,
+      priority: 2,
+      name: "Đội Sinh viên Tình nguyện khoa CNTT",
+      lookup_query: "Đội Sinh viên Tình nguyện khoa CNTT HCMUS",
+      url: "https://www.facebook.com/doisvtn.itus",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 34,
+      category: organization,
+      priority: 2,
+      name: "Công dân trẻ Khoa học tự nhiên",
+      lookup_query: "Công dân trẻ Khoa học tự nhiên",
+      url: "https://www.facebook.com/CongdantreKHTN",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 35,
+      category: organization,
+      priority: 2,
+      name: "Gương Sinh Viên 5 Tốt Khoa CNTT - ĐH KHTN",
+      lookup_query: "Gương Sinh Viên 5 Tốt Khoa CNTT ĐH KHTN",
+      url: "https://www.facebook.com/sv5t.cntt",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 36,
+      category: organization,
+      priority: 2,
+      name: "Chem-Media - Ban Truyền Thông Khoa Hoá học, Trường ĐH KHTN",
+      lookup_query: "Chem-Media Ban Truyền Thông Khoa Hoá học Trường ĐH KHTN",
+      url: "https://www.facebook.com/chemmedia.khtn",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 37,
+      category: community,
+      priority: 6,
+      name: "FIT HCMUS Kênh Hoạt động",
+      lookup_query: "FIT HCMUS Kênh Hoạt động",
+      url: "https://www.facebook.com/fit.hcmus.hoatdong",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 38,
+      category: community,
+      priority: 6,
+      name: "FIT HCMUS Kênh Tuyển dụng",
+      lookup_query: "FIT HCMUS Kênh Tuyển dụng",
+      url: "https://www.facebook.com/fit.hcmus.tuyendung",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 39,
+      category: community,
+      priority: 6,
+      name: "TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN - ĐHQG TP. HCM",
+      lookup_query: "TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN ĐHQG TP HCM",
+      url: "https://www.facebook.com/VNUHCM.US",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 40,
+      category: community,
+      priority: 6,
+      name: "Tuổi trẻ Trường Đại học Khoa học tự nhiên",
+      lookup_query: "Tuổi trẻ Trường Đại học Khoa học tự nhiên",
+      url: "https://www.facebook.com/DoanHoiHCMUS",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 41,
+      category: community,
+      priority: 6,
+      name: "HCMUS Basketball Club",
+      lookup_query: "HCMUS Basketball Club",
+      url: "https://www.facebook.com/BC.HCMUS",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 42,
+      category: community,
+      priority: 6,
+      name: "Computer Security Club - University of Science, VNU - HCM",
+      lookup_query: "Computer Security Club University of Science VNU HCM",
+      url: "https://www.facebook.com/hcmus.compsec.club",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 43,
+      category: community,
+      priority: 6,
+      name: "U-Sci Hub - Hỗ Trợ Sinh Viên",
+      lookup_query: "U-Sci Hub Hỗ Trợ Sinh Viên",
+      url: "https://www.facebook.com/HTSV.USciHub",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 44,
+      category: cohort25,
+      priority: 3,
+      name: "Chi Đoàn - Chi Hội 25 TTH2 HCMUS",
+      lookup_query: "Chi Đoàn Chi Hội 25 TTH2 HCMUS",
+      url: "https://www.facebook.com/profile.php?id=61582799835065",
+      access: public,
+      enabled: true,
+    }

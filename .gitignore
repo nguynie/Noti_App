@@ -1,0 +1,17 @@
+# Environment variables & secrets
+.env
+*.env
+
+# Local state database
+seen_posts.db
+seen_posts.db-journal
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
