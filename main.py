@@ -54,6 +54,13 @@ def main() -> None:
         help="Test scraping a Facebook page URL and print extracted posts",
     )
     parser.add_argument(
+        "--test-notify",
+        nargs="?",
+        const=2,
+        type=int,
+        help="Send a live test notification for a source ID to Telegram (default: 2 - Đoàn khoa CNTT)",
+    )
+    parser.add_argument(
         "--stats",
         action="store_true",
         help="Print database tracking statistics",
@@ -110,6 +117,19 @@ def main() -> None:
         sys.exit(0)
 
     service = NotifierService(config)
+
+    if args.test_notify is not None:
+        source_id = args.test_notify
+        print(f"\n--- Sending Live Test Notification (Source ID {source_id}) ---")
+        service = NotifierService(config)
+        success, message = service.test_live_notification(source_id)
+        if success:
+            print(f"✅ {message}\n")
+            print("👉 Please check your Telegram app now to verify the notification!")
+            sys.exit(0)
+        else:
+            print(f"❌ {message}\n")
+            sys.exit(1)
 
     if args.baseline:
         print("Recording baseline across all sources (no notifications will be sent)...")

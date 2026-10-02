@@ -3,7 +3,7 @@ import random
 import signal
 import sys
 import time
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
 from src.config import Config, SourceItem
 from src.notifier import TelegramNotifier
@@ -23,6 +23,33 @@ class NotifierService:
             self.config.telegram_chat_id,
         )
         self.is_running = True
+
+    def test_live_notification(self, source_id: int = 2) -> Tuple[bool, str]:
+        """Fetch the latest post from a page and send a real test notification to Telegram."""
+        sources = [s for s in self.config.load_sources() if s.id == source_id]
+        if not sources:
+            return False, f"Source ID {source_id} not found in sources.yaml"
+        source = sources[0]
+
+        posts = self.scraper.scrape_page(source.url)
+        if not posts:
+            return False, f"No recent posts could be fetched from {source.name} ({source.url})"
+
+        p = posts[0]
+        if not self.notifier.is_configured:
+            return False, "Telegram credentials are not configured in .env"
+
+        success, err = self.notifier.notify_post(
+            source_name=f"[TEST ALERT] {source.name}",
+            category=source.category,
+            post_url=p.url,
+            message=p.message,
+            creation_time=p.creation_time,
+        )
+        if success:
+            return True, f"Dispatched live test alert for post {p.post_id} from '{source.name}' to Telegram!"
+        return False, f"Failed to send Telegram alert: {err}"
+
 
     def scan_source(
         self,
