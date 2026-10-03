@@ -161,15 +161,6 @@
     "first_seen_at": "2026-10-02T14:25:35.430277+00:00",
     "notified": false
   },
-  "9:1523715589782858": {
-    "source_id": 9,
-    "post_id": "1523715589782858",
-    "post_url": "https://www.facebook.com/dk.lch.diachatkhtn/posts/pfbid033PtNJXfXspaGatU3Sv45DSJpXcNMx4G8Bm2XkhnQbW4UfAW2Mp3V2uf4qhT8PFdQl",
-    "creation_time": 1790936451,
-    "message_snippet": null,
-    "first_seen_at": "2026-10-02T14:25:38.591155+00:00",
-    "notified": false
-  },
   "9:1585336810300886": {
     "source_id": 9,
     "post_id": "1585336810300886",
@@ -682,5 +673,14 @@
     "message_snippet": null,
     "first_seen_at": "2026-10-02T14:27:28.881247+00:00",
     "notified": false
+  },
+  "9:1523715589782858": {
+    "source_id": 9,
+    "post_id": "1523715589782858",
+    "post_url": "https://www.facebook.com/dk.lch.diachatkhtn/posts/pfbid033PtNJXfXspaGatU3Sv45DSJpXcNMx4G8Bm2XkhnQbW4UfAW2Mp3V2uf4qhT8PFdQl",
+    "creation_time": 1790936451,
+    "message_snippet": "[Chia sẻ từ CLB Học thuật Marianest]:\n🌍 CUỘC THI TRỰC TUYẾN “TÌM HIỂU LUẬT ĐỊA CHẤT VÀ KHOÁNG SẢN ⛏️\n\n“Đất đai, khoáng sản là tài nguyên quý giá của quốc gia – hiểu đúng luật để bảo vệ và sử dụng bề",
+    "first_seen_at": "2026-10-03T02:19:20.931568+00:00",
+    "notified": true
   }
 }

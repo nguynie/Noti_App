@@ -121,7 +121,6 @@ def main() -> None:
     if args.test_notify is not None:
         source_id = args.test_notify
         print(f"\n--- Sending Live Test Notification (Source ID {source_id}) ---")
-        service = NotifierService(config)
         success, message = service.test_live_notification(source_id)
         if success:
             print(f"✅ {message}\n")

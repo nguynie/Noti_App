@@ -50,7 +50,6 @@ class NotifierService:
             return True, f"Dispatched live test alert for post {p.post_id} from '{source.name}' to Telegram!"
         return False, f"Failed to send Telegram alert: {err}"
 
-
     def scan_source(
         self,
         source: SourceItem,
@@ -90,38 +89,58 @@ class NotifierService:
                 )
             return 0
 
-        new_count = 0
-        for p in posts:
-            if not self.storage.is_seen(source.id, p.post_id):
-                logger.info(f"[{source.name}] New post detected! ID={p.post_id}")
-                
-                # Send Telegram notification if configured
-                notified = False
-                if self.notifier.is_configured:
-                    success, err = self.notifier.notify_post(
-                        source_name=source.name,
-                        category=source.category,
-                        post_url=p.url,
-                        message=p.message,
-                        creation_time=p.creation_time,
-                    )
-                    if success:
-                        notified = True
-                        logger.info(f"[{source.name}] Sent Telegram notification for {p.post_id}")
-                    else:
-                        logger.error(f"[{source.name}] Failed to send Telegram alert: {err}")
-                else:
-                    logger.warning(
-                        f"[{source.name}] Telegram not configured. Skipping alert dispatch."
-                    )
+        # Filter unseen posts with enhanced URL and ID matching
+        unseen_posts = [
+            p for p in posts if not self.storage.is_seen(source.id, p.post_id, p.url)
+        ]
 
+        if not unseen_posts:
+            return 0
+
+        # Dispatch alerts chronologically (oldest to newest) so chat shows correct sequence
+        unseen_posts.sort(key=lambda x: (x.creation_time or 0))
+
+        new_count = 0
+        for p in unseen_posts:
+            logger.info(f"[{source.name}] New post detected! ID={p.post_id}")
+
+            if self.notifier.is_configured:
+                success, err = self.notifier.notify_post(
+                    source_name=source.name,
+                    category=source.category,
+                    post_url=p.url,
+                    message=p.message,
+                    creation_time=p.creation_time,
+                )
+                if success:
+                    logger.info(
+                        f"[{source.name}] Sent Telegram notification for {p.post_id}"
+                    )
+                    self.storage.mark_seen(
+                        source_id=source.id,
+                        post_id=p.post_id,
+                        post_url=p.url,
+                        creation_time=p.creation_time,
+                        message_snippet=p.message,
+                        notified=True,
+                    )
+                    new_count += 1
+                else:
+                    logger.error(
+                        f"[{source.name}] Failed to send Telegram alert for {p.post_id}: {err}. "
+                        "Will retry on subsequent scan cycle."
+                    )
+            else:
+                logger.warning(
+                    f"[{source.name}] Telegram not configured. Skipping alert dispatch."
+                )
                 self.storage.mark_seen(
                     source_id=source.id,
                     post_id=p.post_id,
                     post_url=p.url,
                     creation_time=p.creation_time,
                     message_snippet=p.message,
-                    notified=notified,
+                    notified=False,
                 )
                 new_count += 1
 
@@ -159,6 +178,9 @@ class NotifierService:
             if idx < total_sources and self.config.request_delay_seconds > 0:
                 jitter = random.uniform(0.8, 1.2) * self.config.request_delay_seconds
                 time.sleep(jitter)
+
+        # Ensure state is flushed to JSON
+        self.storage.sync_to_json()
 
         logger.info(
             f"Scan completed. Checked {total_sources} sources. Found {total_new_posts} new post(s)."

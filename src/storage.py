@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 import sqlite3
@@ -43,6 +44,12 @@ class Storage:
                 ON seen_posts (source_id, post_id)
                 """
             )
+            conn.execute(
+                """
+                CREATE INDEX IF NOT EXISTS idx_seen_posts_source_url
+                ON seen_posts (source_id, post_url)
+                """
+            )
             conn.commit()
 
     def _sync_from_json(self) -> None:
@@ -68,7 +75,8 @@ class Storage:
                             item.get("post_url"),
                             item.get("creation_time"),
                             item.get("message_snippet"),
-                            item.get("first_seen_at") or datetime.now(timezone.utc).isoformat(),
+                            item.get("first_seen_at")
+                            or datetime.now(timezone.utc).isoformat(),
                             1 if item.get("notified") else 0,
                         ),
                     )
@@ -77,7 +85,7 @@ class Storage:
             logger.warning(f"Could not load state from {self.json_path}: {e}")
 
     def _sync_to_json(self) -> None:
-        """Export all seen posts to seen_posts.json."""
+        """Export all seen posts atomically to seen_posts.json."""
         try:
             with self._get_connection() as conn:
                 cursor = conn.cursor()
@@ -102,19 +110,64 @@ class Storage:
                     "notified": bool(r["notified"]),
                 }
 
-            with open(self.json_path, "w", encoding="utf-8") as f:
+            tmp_file = self.json_path.with_suffix(".json.tmp")
+            with open(tmp_file, "w", encoding="utf-8") as f:
                 json.dump(export_data, f, indent=2, ensure_ascii=False)
+            os.replace(tmp_file, self.json_path)
         except Exception as e:
             logger.warning(f"Could not export state to {self.json_path}: {e}")
 
-    def is_seen(self, source_id: int, post_id: str) -> bool:
+    def sync_to_json(self) -> None:
+        """Public alias to force export to JSON."""
+        self._sync_to_json()
+
+    def is_seen(
+        self,
+        source_id: int,
+        post_id: str,
+        post_url: Optional[str] = None,
+    ) -> bool:
+        pid_str = str(post_id).strip()
         with self._get_connection() as conn:
             cursor = conn.cursor()
+            # 1. Exact match on (source_id, post_id)
             cursor.execute(
                 "SELECT 1 FROM seen_posts WHERE source_id = ? AND post_id = ? LIMIT 1",
-                (source_id, post_id),
+                (source_id, pid_str),
             )
-            return cursor.fetchone() is not None
+            if cursor.fetchone() is not None:
+                return True
+
+            # 2. Match exact post_url if provided
+            if post_url:
+                cursor.execute(
+                    "SELECT 1 FROM seen_posts WHERE source_id = ? AND post_url = ? LIMIT 1",
+                    (source_id, post_url),
+                )
+                if cursor.fetchone() is not None:
+                    return True
+
+            # 3. Check if post_id appears inside any stored post_url
+            if len(pid_str) >= 6:
+                cursor.execute(
+                    "SELECT 1 FROM seen_posts WHERE source_id = ? AND post_url LIKE ? LIMIT 1",
+                    (source_id, f"%{pid_str}%"),
+                )
+                if cursor.fetchone() is not None:
+                    return True
+
+            # 4. Check if any stored post_id appears in the query post_url
+            if post_url:
+                cursor.execute(
+                    "SELECT post_id FROM seen_posts WHERE source_id = ?",
+                    (source_id,),
+                )
+                for row in cursor.fetchall():
+                    stored_pid = str(row["post_id"])
+                    if len(stored_pid) >= 6 and stored_pid in post_url:
+                        return True
+
+            return False
 
     def has_source_history(self, source_id: int) -> bool:
         """Check if any posts have ever been recorded for this source."""
@@ -134,6 +187,7 @@ class Storage:
         creation_time: Optional[int] = None,
         message_snippet: Optional[str] = None,
         notified: bool = True,
+        sync_json: bool = True,
     ) -> None:
         now_iso = datetime.now(timezone.utc).isoformat()
         with self._get_connection() as conn:
@@ -145,7 +199,7 @@ class Storage:
                 """,
                 (
                     source_id,
-                    post_id,
+                    str(post_id),
                     post_url,
                     creation_time,
                     message_snippet[:200] if message_snippet else None,
@@ -155,8 +209,8 @@ class Storage:
             )
             conn.commit()
 
-        # Update JSON file
-        self._sync_to_json()
+        if sync_json:
+            self._sync_to_json()
 
     def get_stats(self) -> Dict[str, int]:
         with self._get_connection() as conn:
