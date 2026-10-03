@@ -441,3 +441,14 @@ sources:
       access: public,
       enabled: true,
     }
+  - {
+      id: 45,
+      category: organization,
+      priority: 2,
+      name: "Phòng Công tác Sinh viên - Trường Đại học Khoa học Tự nhiên",
+      lookup_query: "Phòng Công tác Sinh viên Trường Đại học Khoa học Tự nhiên HCMUS",
+      url: "https://www.facebook.com/osa.hcmus",
+      access: public,
+      enabled: true,
+    }
+
