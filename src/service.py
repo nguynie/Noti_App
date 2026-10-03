@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+import html
 import logging
 import random
 import signal
@@ -146,6 +148,45 @@ class NotifierService:
 
         return new_count
 
+    def _check_and_alert_auth_issue(self) -> None:
+        """
+        If Facebook session/cookies encounter consecutive authentication or checkpoint
+        challenges, dispatch an administrative alert to Telegram (at most once every 24 hours).
+        """
+        if not self.notifier.is_configured:
+            return
+
+        last_alert_str = self.storage.get_metadata("last_auth_alert_time")
+        if last_alert_str:
+            try:
+                last_dt = datetime.fromisoformat(last_alert_str)
+                elapsed = (datetime.now(timezone.utc) - last_dt).total_seconds()
+                if elapsed < 86400:  # 24 hours rate limit
+                    logger.warning(
+                        f"Facebook auth issue detected, but alert already sent {int(elapsed)}s ago. Suppressing."
+                    )
+                    return
+            except Exception:
+                pass
+
+        details = self.scraper.last_auth_error or "Phiên đăng nhập bị chặn hoặc hết hạn"
+        escaped_details = html.escape(details)
+        admin_msg = (
+            "⚠️ <b>[HCMUS Notifier - Cảnh báo Hệ thống]</b>\n\n"
+            "Phát hiện lỗi phiên đăng nhập Facebook (Cookies đã hết hạn hoặc bị yêu cầu xác thực Checkpoint).\n"
+            f"Chi tiết: <code>{escaped_details}</code>\n\n"
+            "👉 Vui lòng cập nhật <code>FB_COOKIES</code> trong GitHub Secrets (Settings > Secrets and variables > Actions) để tiếp tục nhận thông báo tự động!"
+        )
+        success, err = self.notifier.send_message(admin_msg)
+        if success:
+            logger.info("Dispatched Telegram admin alert for Facebook session failure.")
+            self.storage.set_metadata(
+                "last_auth_alert_time",
+                datetime.now(timezone.utc).isoformat(),
+            )
+        else:
+            logger.error(f"Failed to dispatch Telegram admin alert: {err}")
+
     def scan_all(
         self,
         force_baseline: bool = False,
@@ -174,10 +215,17 @@ class NotifierService:
             except Exception as e:
                 logger.error(f"Error scanning source {source.name} ({source.url}): {e}")
 
+            # Check for consecutive auth/checkpoint failures
+            if self.scraper.consecutive_auth_failures >= 5:
+                self._check_and_alert_auth_issue()
+
             # Introduce jitter between page requests if more sources remain
             if idx < total_sources and self.config.request_delay_seconds > 0:
                 jitter = random.uniform(0.8, 1.2) * self.config.request_delay_seconds
                 time.sleep(jitter)
+
+        if self.scraper.consecutive_auth_failures >= 5:
+            self._check_and_alert_auth_issue()
 
         # Ensure state is flushed to JSON
         self.storage.sync_to_json()

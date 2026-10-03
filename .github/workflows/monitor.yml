@@ -2,9 +2,11 @@ name: Facebook Page Notifier
 
 on:
   schedule:
-    # Run every 20 minutes
-    - cron: '*/20 * * * *'
-  workflow_dispatch: # Allows running manually from GitHub UI
+    # Offset minutes avoid peak top-of-hour congestion on GitHub runners
+    - cron: '11,41 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+  repository_dispatch: # Allows instant webhook triggers from external schedulers
+    types: [check-pages-webhook]
 
 concurrency:
   group: facebook-notifier
@@ -15,10 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Required to commit and push updated seen_posts.json
+      actions: write  # Required for keepalive-workflow to prevent auto-disable
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,6 +34,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
+      - name: Pull latest state
+        run: |
+          git pull --rebase origin main || true
 
       - name: Scan Facebook pages and notify Telegram
         env:
@@ -46,3 +55,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add seen_posts.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update seen posts [skip ci]" && git pull --rebase origin main && git push)
+
+      - name: Keepalive Workflow
+        uses: gautamkrishnar/keepalive-workflow@v2
+        if: always()

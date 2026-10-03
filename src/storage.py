@@ -1,7 +1,8 @@
+from contextlib import contextmanager
+from datetime import datetime, timezone
 import json
 import logging
 import os
-from datetime import datetime, timezone
 from pathlib import Path
 import sqlite3
 from typing import Dict, List, Optional
@@ -16,10 +17,14 @@ class Storage:
         self.init_db()
         self._sync_from_json()
 
-    def _get_connection(self) -> sqlite3.Connection:
+    @contextmanager
+    def _get_connection(self):
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
-        return conn
+        try:
+            yield conn
+        finally:
+            conn.close()
 
     def init_db(self) -> None:
         with self._get_connection() as conn:
@@ -50,6 +55,14 @@ class Storage:
                 ON seen_posts (source_id, post_url)
                 """
             )
+            conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS app_metadata (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL
+                )
+                """
+            )
             conn.commit()
 
     def _sync_from_json(self) -> None:
@@ -63,6 +76,18 @@ class Storage:
                 return
             with self._get_connection() as conn:
                 for key, item in data.items():
+                    if key == "_metadata" and isinstance(item, dict):
+                        for m_k, m_v in item.items():
+                            conn.execute(
+                                """
+                                INSERT OR REPLACE INTO app_metadata (key, value)
+                                VALUES (?, ?)
+                                """,
+                                (m_k, str(m_v)),
+                            )
+                        continue
+                    if key.startswith("_") or not isinstance(item, dict):
+                        continue
                     conn.execute(
                         """
                         INSERT OR IGNORE INTO seen_posts
@@ -97,7 +122,13 @@ class Storage:
                 )
                 rows = cursor.fetchall()
 
+                cursor.execute("SELECT key, value FROM app_metadata")
+                meta_rows = cursor.fetchall()
+
             export_data = {}
+            if meta_rows:
+                export_data["_metadata"] = {r["key"]: r["value"] for r in meta_rows}
+
             for r in rows:
                 key = f"{r['source_id']}:{r['post_id']}"
                 export_data[key] = {
@@ -120,6 +151,31 @@ class Storage:
     def sync_to_json(self) -> None:
         """Public alias to force export to JSON."""
         self._sync_to_json()
+
+    def get_metadata(self, key: str, default: Optional[str] = None) -> Optional[str]:
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT value FROM app_metadata WHERE key = ? LIMIT 1",
+                (key,),
+            )
+            row = cursor.fetchone()
+            if row is not None:
+                return row["value"]
+            return default
+
+    def set_metadata(self, key: str, value: str, sync_json: bool = True) -> None:
+        with self._get_connection() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO app_metadata (key, value)
+                VALUES (?, ?)
+                """,
+                (key, str(value)),
+            )
+            conn.commit()
+        if sync_json:
+            self._sync_to_json()
 
     def is_seen(
         self,

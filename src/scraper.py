@@ -20,6 +20,8 @@ class FacebookPost:
 class FacebookScraper:
     def __init__(self, cookies: Optional[Dict[str, str]] = None):
         self.session = requests.Session()
+        self.last_auth_error: Optional[str] = None
+        self.consecutive_auth_failures: int = 0
         self.session.headers.update(
             {
                 "User-Agent": (
@@ -93,12 +95,43 @@ class FacebookScraper:
         page_id = self._extract_page_identifier(page_url)
         try:
             resp = self.session.get(page_url, timeout=15, allow_redirects=True)
+            if resp.status_code in (401, 403, 429):
+                self.last_auth_error = f"HTTP {resp.status_code}"
+                self.consecutive_auth_failures += 1
+                logger.warning(
+                    f"HTTP {resp.status_code} (auth/rate-limit) when accessing {page_url}"
+                )
+                return []
             if resp.status_code != 200:
                 logger.warning(
                     f"HTTP {resp.status_code} when accessing {page_url}"
                 )
                 return []
+
+            final_url_lower = str(resp.url).lower()
+            if any(
+                p in final_url_lower
+                for p in ("checkpoint", "login/?next", "login.php", "login_attempt")
+            ):
+                self.last_auth_error = f"Redirected to auth/checkpoint: {resp.url}"
+                self.consecutive_auth_failures += 1
+                logger.warning(
+                    f"Facebook auth challenge detected for {page_url}: redirected to {resp.url}"
+                )
+                return []
+
             text = resp.text
+            if (
+                "checkpoint_title" in text
+                or 'name="approvals_code"' in text
+                or 'id="checkpointbox"' in text
+            ):
+                self.last_auth_error = "Checkpoint challenge detected in response body"
+                self.consecutive_auth_failures += 1
+                logger.warning(
+                    f"Facebook checkpoint challenge in body for {page_url}"
+                )
+                return []
         except Exception as e:
             logger.error(f"Error fetching {page_url}: {e}")
             return []
@@ -140,6 +173,9 @@ class FacebookScraper:
             key=lambda x: (x.creation_time or 0),
             reverse=True,
         )
+        if results:
+            self.consecutive_auth_failures = 0
+            self.last_auth_error = None
         return results
 
     def _parse_timeline_feed(
