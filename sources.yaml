@@ -451,4 +451,24 @@ sources:
       access: public,
       enabled: true,
     }
+  - {
+      id: 46,
+      category: organization,
+      priority: 2,
+      name: "Hội Sinh viên Việt Nam TP. Hồ Chí Minh",
+      lookup_query: "Hội Sinh viên Việt Nam TP. Hồ Chí Minh",
+      url: "https://www.facebook.com/hoisinhvienVietNamHCM",
+      access: public,
+      enabled: true,
+    }
+  - {
+      id: 47,
+      category: organization,
+      priority: 2,
+      name: "Đội SVTN Khoa ĐTVT",
+      lookup_query: "Đội SVTN Khoa ĐTVT",
+      url: "https://www.facebook.com/svtn.dtvt",
+      access: public,
+      enabled: true,
+    }
 
