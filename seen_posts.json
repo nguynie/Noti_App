@@ -1348,5 +1348,23 @@
     "message_snippet": null,
     "first_seen_at": "2026-10-07T14:03:36.339571+00:00",
     "notified": true
+  },
+  "6:1728885052008389": {
+    "source_id": 6,
+    "post_id": "1728885052008389",
+    "post_url": "https://www.facebook.com/doankhoa.lienchihoi.hoahoc.khtn/posts/pfbid019bybqYS5BMozpqUJKSWq1d3PLHZCvXXLFGRDF5rtfSZbWF4Kx7NLbfbUPYVQG3Bl",
+    "creation_time": 1791383297,
+    "message_snippet": "💻 “THANH NIÊN SỐ” - CÙNG VƯƠN MÌNH TRONG THỜI ĐẠI SỐ 💻\n\n📱 Nhằm hưởng ứng Tuần lễ \"Sinh viên Thành phố vươn mình thời đại số\" (10/10/2026 - 18/10/2026), Liên chi Hội Hóa học tổ chức hoạt động tình nguy",
+    "first_seen_at": "2026-10-07T14:31:43.344735+00:00",
+    "notified": true
+  },
+  "39:1628318022304664": {
+    "source_id": 39,
+    "post_id": "1628318022304664",
+    "post_url": "https://www.facebook.com/events/1628318022304664/",
+    "creation_time": 1791382572,
+    "message_snippet": null,
+    "first_seen_at": "2026-10-07T14:33:25.591952+00:00",
+    "notified": true
   }
 }
