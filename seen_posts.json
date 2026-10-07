@@ -1321,5 +1321,14 @@
     "message_snippet": "[Hỗ trợ truyền thông] \n\nBuổi phỏng vấn giữa Đại học Houston (https://www.uh.edu/), Texas, Hoa Kỳ và sinh viên, học viên Trường ĐH KHTN cho các chương trình đào tạo bậc Thạc sĩ và Tiến sĩ. Thông tin ch",
     "first_seen_at": "2026-10-07T13:04:22.617679+00:00",
     "notified": true
+  },
+  "39:1630618245128249": {
+    "source_id": 39,
+    "post_id": "1630618245128249",
+    "post_url": "https://www.facebook.com/events/1630618245128249/",
+    "creation_time": 1791379690,
+    "message_snippet": null,
+    "first_seen_at": "2026-10-07T13:33:17.796124+00:00",
+    "notified": true
   }
 }
