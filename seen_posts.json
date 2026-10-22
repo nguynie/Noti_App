@@ -4219,5 +4219,23 @@
     "message_snippet": null,
     "first_seen_at": "2026-10-22T02:03:09.393533+00:00",
     "notified": true
+  },
+  "33:1033938972237694": {
+    "source_id": 33,
+    "post_id": "1033938972237694",
+    "post_url": "https://www.facebook.com/doisvtn.itus/posts/1038763549222149:1038763549222149",
+    "creation_time": 1792634600,
+    "message_snippet": null,
+    "first_seen_at": "2026-10-22T02:32:57.703487+00:00",
+    "notified": true
+  },
+  "46:1454652470131534": {
+    "source_id": 46,
+    "post_id": "1454652470131534",
+    "post_url": "https://www.facebook.com/hoisinhvienVietNamHCM/posts/pfbid02LxHLJWTcLv4vFn5oSotvav9Bt7SgRdVD85Tw8GnVyhnWzYu6G9oPd5T8ati2X11sl",
+    "creation_time": 1792634932,
+    "message_snippet": "🇻🇳🇲🇾 KHỞI ĐỘNG CHƯƠNG TRÌNH TÌNH NGUYỆN SINH VIÊN ASEAN - YSS NĂM 2026 🇲🇾🇻🇳\n\n☘️ Từ ngày 19-21/10/2026, sau khi có mặt tại địa phương, đoàn đại biểu thanh niên, sinh viên Thành phố cùng các tình nguyện",
+    "first_seen_at": "2026-10-22T02:33:39.756655+00:00",
+    "notified": true
   }
 }
