@@ -5434,5 +5434,14 @@
     "message_snippet": "[THÔNG BÁO NHẮC LẠI]\n\n⏳Hôm nay (29/10/2029) là ngày cuối đăng ký khám sức khỏe định kỳ cho sinh viên đợt 2 năm 2026 tại cơ sở Nguyễn Văn Cừ.\n⏳Bạn nào chưa đăng ký thì nhanh chóng đăng ký nha.\n\n---\n Că",
     "first_seen_at": "2026-10-29T08:03:57.285173+00:00",
     "notified": true
+  },
+  "9:1550599053761178": {
+    "source_id": 9,
+    "post_id": "1550599053761178",
+    "post_url": "https://www.facebook.com/dk.lch.diachatkhtn/posts/2163971871144651:2163971871144651",
+    "creation_time": 1793265907,
+    "message_snippet": null,
+    "first_seen_at": "2026-10-29T09:31:41.905707+00:00",
+    "notified": true
   }
 }
